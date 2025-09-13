@@ -10,9 +10,6 @@ interface MoodEntry {
   mood: number;
   energy: number;
   stress: number;
-  sleep: number;
-  academicStress: number;
-  socialConnection: number;
 }
 
 const Index = () => {
@@ -34,9 +31,9 @@ const Index = () => {
     setTodaysMood(todaysEntry || null);
   }, []);
 
-  const handleMoodSubmit = (mood: number, energy: number, stress: number, sleep: number, academicStress: number, socialConnection: number) => {
+  const handleMoodSubmit = (mood: number, energy: number, stress: number) => {
     const today = new Date().toISOString().split('T')[0];
-    const newEntry: MoodEntry = { date: today, mood, energy, stress, sleep, academicStress, socialConnection };
+    const newEntry: MoodEntry = { date: today, mood, energy, stress };
     
     const updatedEntries = moodEntries.filter(entry => entry.date !== today);
     updatedEntries.push(newEntry);

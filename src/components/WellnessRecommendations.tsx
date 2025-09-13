@@ -18,9 +18,6 @@ interface MoodEntry {
   mood: number;
   energy: number;
   stress: number;
-  sleep: number;
-  academicStress: number;
-  socialConnection: number;
 }
 
 interface WellnessRecommendationsProps {
@@ -48,15 +45,6 @@ export const WellnessRecommendations = ({ recentMood, moodHistory }: WellnessRec
       : 3;
     const avgStress = moodHistory.length > 0 
       ? moodHistory.reduce((sum, entry) => sum + entry.stress, 0) / moodHistory.length 
-      : 3;
-    const avgSleep = moodHistory.length > 0 
-      ? moodHistory.reduce((sum, entry) => sum + entry.sleep, 0) / moodHistory.length 
-      : 3;
-    const avgAcademicStress = moodHistory.length > 0 
-      ? moodHistory.reduce((sum, entry) => sum + entry.academicStress, 0) / moodHistory.length 
-      : 3;
-    const avgSocialConnection = moodHistory.length > 0 
-      ? moodHistory.reduce((sum, entry) => sum + entry.socialConnection, 0) / moodHistory.length 
       : 3;
 
     // Mood-based recommendations
@@ -91,42 +79,6 @@ export const WellnessRecommendations = ({ recentMood, moodHistory }: WellnessRec
         description: 'Try the 4-7-8 technique: Inhale for 4, hold for 7, exhale for 8. Repeat 4 times.',
         icon: <TreePine className="h-5 w-5" />,
         category: 'Stress',
-        priority: 1
-      });
-    }
-
-    // Sleep-based recommendations
-    if (avgSleep < 3) {
-      recommendations.push({
-        id: 'sleep-improvement',
-        title: 'Better Sleep Hygiene',
-        description: 'Create a bedtime routine: dim lights 1 hour before bed, avoid screens, and keep a consistent schedule.',
-        icon: <Moon className="h-5 w-5" />,
-        category: 'Sleep',
-        priority: 1
-      });
-    }
-
-    // Academic stress recommendations
-    if (avgAcademicStress > 3) {
-      recommendations.push({
-        id: 'study-break',
-        title: 'Take Study Breaks',
-        description: 'Use the Pomodoro technique: 25 minutes focused study, then 5-minute break.',
-        icon: <Book className="h-5 w-5" />,
-        category: 'Academic',
-        priority: 1
-      });
-    }
-
-    // Social connection recommendations
-    if (avgSocialConnection < 3) {
-      recommendations.push({
-        id: 'social-connection',
-        title: 'Reach Out to Friends',
-        description: 'Send a message to a friend or family member. Human connection boosts wellbeing.',
-        icon: <Heart className="h-5 w-5" />,
-        category: 'Social',
         priority: 1
       });
     }
@@ -177,10 +129,8 @@ export const WellnessRecommendations = ({ recentMood, moodHistory }: WellnessRec
       case 'Mood': return 'bg-primary/10 text-primary';
       case 'Energy': return 'bg-success/10 text-success';
       case 'Stress': return 'bg-accent/10 text-accent';
-      case 'Sleep': return 'bg-secondary/20 text-secondary-foreground';
-      case 'Academic': return 'bg-destructive/10 text-destructive';
-      case 'Social': return 'bg-chart-3/20 text-chart-3';
       case 'Health': return 'bg-wellness/20 text-wellness-foreground';
+      case 'Sleep': return 'bg-secondary/20 text-secondary-foreground';
       case 'Mindfulness': return 'bg-calm/20 text-calm-foreground';
       case 'Growth': return 'bg-muted/50 text-muted-foreground';
       default: return 'bg-muted/50 text-muted-foreground';
