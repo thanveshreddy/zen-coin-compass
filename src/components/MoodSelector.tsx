@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
 
 interface MoodSelectorProps {
-  onMoodSubmit: (mood: number, energy: number, stress: number) => void;
-  todaysMood: { mood: number; energy: number; stress: number } | null;
+  onMoodSubmit: (mood: number, energy: number, stress: number, sleep: number, academicStress: number, socialConnection: number) => void;
+  todaysMood: { mood: number; energy: number; stress: number; sleep: number; academicStress: number; socialConnection: number } | null;
 }
 
 const moodEmojis = ["😢", "😟", "😐", "🙂", "😊"];
@@ -17,9 +17,12 @@ export const MoodSelector = ({ onMoodSubmit, todaysMood }: MoodSelectorProps) =>
   const [mood, setMood] = useState(todaysMood?.mood || 3);
   const [energy, setEnergy] = useState(todaysMood?.energy || 3);
   const [stress, setStress] = useState(todaysMood?.stress || 3);
+  const [sleep, setSleep] = useState(todaysMood?.sleep || 3);
+  const [academicStress, setAcademicStress] = useState(todaysMood?.academicStress || 3);
+  const [socialConnection, setSocialConnection] = useState(todaysMood?.socialConnection || 3);
 
   const handleSubmit = () => {
-    onMoodSubmit(mood, energy, stress);
+    onMoodSubmit(mood, energy, stress, sleep, academicStress, socialConnection);
   };
 
   if (todaysMood) {
@@ -30,7 +33,7 @@ export const MoodSelector = ({ onMoodSubmit, todaysMood }: MoodSelectorProps) =>
           <span className="font-medium">Check-in Complete!</span>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
           <div className="text-center space-y-2">
             <p className="text-sm text-muted-foreground">Mood</p>
             <div className="text-4xl">{moodEmojis[todaysMood.mood - 1]}</div>
@@ -47,6 +50,24 @@ export const MoodSelector = ({ onMoodSubmit, todaysMood }: MoodSelectorProps) =>
             <p className="text-sm text-muted-foreground">Stress</p>
             <div className="text-2xl font-semibold text-accent">{todaysMood.stress}/5</div>
             <Badge variant="outline">Stress Level</Badge>
+          </div>
+
+          <div className="text-center space-y-2">
+            <p className="text-sm text-muted-foreground">Sleep</p>
+            <div className="text-2xl font-semibold text-secondary-foreground">{todaysMood.sleep}/5</div>
+            <Badge variant="outline">Sleep Quality</Badge>
+          </div>
+
+          <div className="text-center space-y-2">
+            <p className="text-sm text-muted-foreground">Academic</p>
+            <div className="text-2xl font-semibold text-destructive">{todaysMood.academicStress}/5</div>
+            <Badge variant="outline">Study Stress</Badge>
+          </div>
+
+          <div className="text-center space-y-2">
+            <p className="text-sm text-muted-foreground">Social</p>
+            <div className="text-2xl font-semibold text-chart-3">{todaysMood.socialConnection}/5</div>
+            <Badge variant="outline">Connection</Badge>
           </div>
         </div>
         
@@ -121,6 +142,66 @@ export const MoodSelector = ({ onMoodSubmit, todaysMood }: MoodSelectorProps) =>
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>Very Calm</span>
           <span>Very Stressed</span>
+        </div>
+      </div>
+
+      {/* Sleep Quality */}
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-medium">Sleep Quality</h3>
+          <span className="text-sm text-muted-foreground">{sleep}/5</span>
+        </div>
+        <Slider
+          value={[sleep]}
+          onValueChange={(value) => setSleep(value[0])}
+          max={5}
+          min={1}
+          step={1}
+          className="w-full"
+        />
+        <div className="flex justify-between text-xs text-muted-foreground">
+          <span>Very Poor</span>
+          <span>Excellent</span>
+        </div>
+      </div>
+
+      {/* Academic Stress */}
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-medium">Academic Stress</h3>
+          <span className="text-sm text-muted-foreground">{academicStress}/5</span>
+        </div>
+        <Slider
+          value={[academicStress]}
+          onValueChange={(value) => setAcademicStress(value[0])}
+          max={5}
+          min={1}
+          step={1}
+          className="w-full"
+        />
+        <div className="flex justify-between text-xs text-muted-foreground">
+          <span>No Pressure</span>
+          <span>Overwhelming</span>
+        </div>
+      </div>
+
+      {/* Social Connection */}
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-medium">Social Connection</h3>
+          <span className="text-sm text-muted-foreground">{socialConnection}/5</span>
+        </div>
+        <Slider
+          value={[socialConnection]}
+          onValueChange={(value) => setSocialConnection(value[0])}
+          max={5}
+          min={1}
+          step={1}
+          className="w-full"
+        />
+        <div className="flex justify-between text-xs text-muted-foreground">
+          <span>Isolated</span>
+          <span>Well Connected</span>
         </div>
       </div>
 

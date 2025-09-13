@@ -6,6 +6,9 @@ interface MoodEntry {
   mood: number;
   energy: number;
   stress: number;
+  sleep: number;
+  academicStress: number;
+  socialConnection: number;
 }
 
 interface MoodTrendChartProps {
@@ -87,28 +90,70 @@ export const MoodTrendChart = ({ entries }: MoodTrendChartProps) => {
                 dot={{ fill: 'hsl(var(--accent))', strokeWidth: 2, r: 4 }}
                 name="Stress"
               />
+              <Line 
+                type="monotone" 
+                dataKey="sleep" 
+                stroke="hsl(var(--chart-3))" 
+                strokeWidth={2}
+                dot={{ fill: 'hsl(var(--chart-3))', strokeWidth: 2, r: 3 }}
+                name="Sleep"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="academicStress" 
+                stroke="hsl(var(--destructive))" 
+                strokeWidth={2}
+                dot={{ fill: 'hsl(var(--destructive))', strokeWidth: 2, r: 3 }}
+                name="Academic Stress"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="socialConnection" 
+                stroke="hsl(var(--chart-5))" 
+                strokeWidth={2}
+                dot={{ fill: 'hsl(var(--chart-5))', strokeWidth: 2, r: 3 }}
+                name="Social Connection"
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
         
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-border">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6 pt-6 border-t border-border">
           <div className="text-center space-y-1">
-            <p className="text-sm text-muted-foreground">Average Mood</p>
-            <p className="text-2xl font-semibold text-primary">
+            <p className="text-sm text-muted-foreground">Avg Mood</p>
+            <p className="text-xl font-semibold text-primary">
               {(entries.reduce((sum, entry) => sum + entry.mood, 0) / entries.length).toFixed(1)}/5
             </p>
           </div>
           <div className="text-center space-y-1">
-            <p className="text-sm text-muted-foreground">Average Energy</p>
-            <p className="text-2xl font-semibold text-success">
+            <p className="text-sm text-muted-foreground">Avg Energy</p>
+            <p className="text-xl font-semibold text-success">
               {(entries.reduce((sum, entry) => sum + entry.energy, 0) / entries.length).toFixed(1)}/5
             </p>
           </div>
           <div className="text-center space-y-1">
-            <p className="text-sm text-muted-foreground">Average Stress</p>
-            <p className="text-2xl font-semibold text-accent">
+            <p className="text-sm text-muted-foreground">Avg Stress</p>
+            <p className="text-xl font-semibold text-accent">
               {(entries.reduce((sum, entry) => sum + entry.stress, 0) / entries.length).toFixed(1)}/5
+            </p>
+          </div>
+          <div className="text-center space-y-1">
+            <p className="text-sm text-muted-foreground">Avg Sleep</p>
+            <p className="text-xl font-semibold text-chart-3">
+              {(entries.reduce((sum, entry) => sum + entry.sleep, 0) / entries.length).toFixed(1)}/5
+            </p>
+          </div>
+          <div className="text-center space-y-1">
+            <p className="text-sm text-muted-foreground">Academic</p>
+            <p className="text-xl font-semibold text-destructive">
+              {(entries.reduce((sum, entry) => sum + entry.academicStress, 0) / entries.length).toFixed(1)}/5
+            </p>
+          </div>
+          <div className="text-center space-y-1">
+            <p className="text-sm text-muted-foreground">Social</p>
+            <p className="text-xl font-semibold text-chart-5">
+              {(entries.reduce((sum, entry) => sum + entry.socialConnection, 0) / entries.length).toFixed(1)}/5
             </p>
           </div>
         </div>
